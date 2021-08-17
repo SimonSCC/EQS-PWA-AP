@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF-Shell-Access", "WPF-Shell-Access-NET5.0\WPF-Shell-Access.csproj", "{59A3CD1F-3C90-4FF7-9838-08CF78BBE336}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PWA-AccessLocal-WPF", "PWA-AccessLocal-WPF\PWA-AccessLocal-WPF.csproj", "{5D6FB32B-F8B0-454A-882C-AAE671AF8F82}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59A3CD1F-3C90-4FF7-9838-08CF78BBE336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A3CD1F-3C90-4FF7-9838-08CF78BBE336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A3CD1F-3C90-4FF7-9838-08CF78BBE336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A3CD1F-3C90-4FF7-9838-08CF78BBE336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D6FB32B-F8B0-454A-882C-AAE671AF8F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D6FB32B-F8B0-454A-882C-AAE671AF8F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D6FB32B-F8B0-454A-882C-AAE671AF8F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D6FB32B-F8B0-454A-882C-AAE671AF8F82}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13081579-C5AD-4968-B651-41C25BD52C0C}
+	EndGlobalSection
+EndGlobal

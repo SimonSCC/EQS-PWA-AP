@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>WPF_Shell_Access_NET5._0</RootNamespace>
+  </PropertyGroup>
+
+</Project>
