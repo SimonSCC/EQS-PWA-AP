@@ -5,14 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PWA_AccessLocal_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="AntiqueWhite">
+        Title="MainWindow" Height="450" Width="800" Background="{StaticResource PageBackgounrColorBrush}">
     <Grid>
         <StackPanel Margin="25 25" HorizontalAlignment="Center">
             
-            <StackPanel Name="SSIDInputPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="Network name" HorizontalAlignment="Center" TextAlignment="Right"  VerticalAlignment="Center" Width="125"></TextBlock>
+            <TextBlock Text="Network name" HorizontalAlignment="Center" TextAlignment="Center"  VerticalAlignment="Center" Width="125"></TextBlock>
             <TextBox  Width="250"  VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="NetworkName_Textbox" Margin="5" Text="{Binding Path=CurrentConfig.SSID}"/>
-            <TextBlock IsHitTestVisible="False" Text="Network name" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-255,0,0,0" Foreground="DarkGray">
+            <TextBlock IsHitTestVisible="False" Text="Network name" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, -30, 0,0" Foreground="DarkGray">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -24,12 +23,10 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            </StackPanel>
 
-            <StackPanel Name="PassphraseInputPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="Network passphrase" HorizontalAlignment="Right" VerticalAlignment="Center" Width="125" TextAlignment="Right"></TextBlock>
-                <TextBox  Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="NetworkPass_Textbox" Margin="5" Text="{Binding Path=CurrentConfig.PassPhrase}"/>
-            <TextBlock IsHitTestVisible="False" Text="Network Password" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-250,0,0,0" Foreground="DarkGray">
+            <TextBlock Text="Network passphrase" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" TextAlignment="Right"></TextBlock>
+            <TextBox  Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="NetworkPass_Textbox" Margin="5" Text="{Binding Path=CurrentConfig.PassPhrase}"/>
+            <TextBlock IsHitTestVisible="False" Text="Network Password" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-30,0,0" Foreground="DarkGray">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -41,8 +38,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>                
-            </StackPanel>
-            <TextBlock Text="*Minumum 8 characters" Margin="0 -5 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Text="*Minumum 8 characters" Margin="0 -5 0 0" FontSize="11" Foreground="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
             <TextBlock Margin="15 15 15 0" Text="{Binding HotSpotStatusMessage}" TextAlignment="Center"></TextBlock>
             
