@@ -15,7 +15,7 @@ namespace WPF_Shell_Access_NET
             startInfo.FileName = uri;
             startInfo.UseShellExecute = true;
             Process.Start(startInfo);
-          
+
         }
 
         async Task<PowerShellScriptResponse> ExecutePowerShellScriptAsync(string path)
@@ -32,22 +32,6 @@ namespace WPF_Shell_Access_NET
             process.Start();
 
             return new PowerShellScriptResponse(await process.StandardOutput.ReadToEndAsync(), await process.StandardError.ReadToEndAsync());
-        }
-
-        PowerShellScriptResponse ExecutePowerShellScript(string path)
-        {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = @"powershell.exe";
-            startInfo.Arguments = path;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.UseShellExecute = false;
-            startInfo.CreateNoWindow = true;
-            Process process = new Process();
-            process.StartInfo = startInfo;
-            process.Start();
-
-            return new PowerShellScriptResponse(process.StandardOutput.ReadToEnd(), process.StandardError.ReadToEnd());
         }
 
         public async Task<PowerShellScriptResponse> StartHotspot()
@@ -95,11 +79,11 @@ namespace WPF_Shell_Access_NET
             return await ExecutePowerShellScriptAsync(path);
         }
 
-        public PowerShellScriptResponse GetOperationalState()
+        public async Task<PowerShellScriptResponse> GetOperationalState()
         {
             string path = Directory.GetCurrentDirectory();
             path += "\\GetOperationalState.ps1";
-            return ExecutePowerShellScript(path);
+            return await ExecutePowerShellScriptAsync(path);
         }
     }
 }

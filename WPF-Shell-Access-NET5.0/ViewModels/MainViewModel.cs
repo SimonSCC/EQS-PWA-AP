@@ -10,12 +10,19 @@ using System.Windows.Input;
 using WPF_Shell_Access_NET;
 using WPF_Shell_Access_NET5._0.Commands;
 using WPF_Shell_Access_NET5._0.Models;
+using WPF_Shell_Access_NET5._0.Services;
 
 namespace WPF_Shell_Access_NET5._0.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
         public ShellCommands ShellCommands { get; set; }
+        public HotspotService HotspotService { get; set; }
+        
+        
+        private string _hotspotStatusMessage;
+        public string HotSpotStatusMessage { get => _hotspotStatusMessage; set => SetProperty(ref _hotspotStatusMessage, value); }
+
 
         private AccessPointConfiguration _currentConfig;
         public AccessPointConfiguration CurrentConfig { get => _currentConfig; set => SetProperty(ref _currentConfig, value); }
@@ -25,34 +32,56 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
 
         //Commands -:: Start
 
-        private readonly DelegateCommand _startHotspotCommand;
-        public ICommand StartHotspotCommand => _startHotspotCommand;
+        public ICommand StartHotspotCommand { get; }
 
-        private readonly DelegateCommand _endHotspotCommand;
-        public ICommand EndHotspotCommand => _endHotspotCommand;
+        private bool _startHotspotBtnEnabled;
+        public bool StartHotspotBtnEnabled { get => _startHotspotBtnEnabled; set => SetProperty(ref _startHotspotBtnEnabled, value); }
 
-        private readonly DelegateCommand _clickLink;
-        public ICommand ClickLink => _clickLink;
+
+        public ICommand StopHotspotCommand { get; }
+
+        private bool __stopHotspotBtnEnabled;
+        public bool StopHotspotBtnEnabled { get => __stopHotspotBtnEnabled; set => SetProperty(ref __stopHotspotBtnEnabled, value); }
+
+        public ICommand HyperlinkOpenCommand { get; }
 
         //Commands -:: End
 
+
         public MainViewModel()
         {
-            //Commands -:: Start
-            _startHotspotCommand = new DelegateCommand(StartHotspot, CanCreateHotspot);
-            _endHotspotCommand = new DelegateCommand(EndHotspot, CanEndHotspot);
-            _clickLink = new DelegateCommand(OpenLink, CanClickLink);
+            ShellCommands = new ShellCommands();
+            HotspotService = new HotspotService(this, ShellCommands);
+
+            //Commands Begin
+            StartHotspotCommand = new StartHotspotCommand(this, HotspotService);
+            StopHotspotCommand = new StopHotspotCommand(this, HotspotService);
+            HyperlinkOpenCommand = new HyperlinkOpenCommand(HotspotService);
+
 
             //Commands -:: End
-
-            ShellCommands = new ShellCommands();
-            InitializeFields();
+            UpdateFields();
         }
 
-        private async void InitializeFields()
+
+
+        public async void UpdateFields()
         {
             PWAInfo = GetPWAInfo();
-            CurrentConfig = await GetConfig();
+            CurrentConfig = await HotspotService.GetConfig();
+            bool isOn = await HotspotService.IsHotspotOn();
+            if (isOn)
+            {
+                HotSpotStatusMessage = "A hotspot is running!";
+                StartHotspotBtnEnabled = false;
+                StopHotspotBtnEnabled = true;
+            }
+            else if (!isOn)
+            {
+                HotSpotStatusMessage = "A hotspot is not running!";
+                StartHotspotBtnEnabled = true;
+                StopHotspotBtnEnabled = false;
+            }            
         }
 
         private PWAInformation GetPWAInfo()
@@ -72,98 +101,7 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
                     }
                 }
             }
-            return new PWAInformation(ipaddress, port);  
-        }
-
-        private async Task<AccessPointConfiguration> GetConfig()
-        {
-            PowerShellScriptResponse result = await ShellCommands.GetProfile();
-            string rawString = result.Response;
-            if (rawString != null && rawString != "")
-            {
-                string[] split = rawString.Split("\n");
-                return new AccessPointConfiguration(split[0], split[1]);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private async void SetConfig()
-        {
-            PowerShellScriptResponse resp = await ShellCommands.ChangeProfile(CurrentConfig);
-
-        }
-        private async void StartHotspot(object cmdParam)
-        {
-
-            if (!CurrentConfig.Equals(await GetConfig()))
-            {
-                SetConfig();
-            }
-            PowerShellScriptResponse resp = await ShellCommands.StartHotspot();
-            InitializeFields();
-            _startHotspotCommand.InvokeCanExecuteChanged();
-
-        }
-        private async void EndHotspot(object cmdParam)
-        {
-            if (!CurrentConfig.Equals(await GetConfig()))
-            {
-                SetConfig();
-            }
-            PowerShellScriptResponse resp = await ShellCommands.StopHotspot();
-            InitializeFields();
-            _endHotspotCommand.InvokeCanExecuteChanged();
-
-        }
-
-        private void OpenLink(object cmdParam)
-        {
-            ShellCommands.StartBrowser(PWAInfo.LinkToPWA);
-            _clickLink.InvokeCanExecuteChanged();
-
-        }
-
-        private bool CanCreateHotspot(object cmdParam)
-        {
-            PowerShellScriptResponse Response = ShellCommands.GetOperationalState();
-            if (Response.Response.Contains("Off"))
-            {
-                return true;
-            }
-            else if (Response.Response.Contains("On"))
-            {
-                return false;
-            }
-            else
-            {
-                throw new Exception("An unexpected error occured" + "\n" + Response.Error);
-            } 
-        }
-
-        private bool CanEndHotspot(object cmdParam)
-        {
-            PowerShellScriptResponse Response = ShellCommands.GetOperationalState();
-            if (Response.Response.Contains("Off"))
-            {
-                return false;
-            }
-            else if (Response.Response.Contains("On"))
-            {
-                return true;
-            }
-            else
-            {
-                throw new Exception("An unexpected error occured" + "\n" + Response.Error);
-            }
-        }
-
-
-        private bool CanClickLink(object cmdParam)
-        {
-            return true;
+            return new PWAInformation(ipaddress, port);
         }
     }
 }

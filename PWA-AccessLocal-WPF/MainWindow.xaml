@@ -44,8 +44,10 @@
             </StackPanel>
             <TextBlock Text="*Minumum 8 characters" Margin="0 -5 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
-            <Button HorizontalAlignment="Center" Margin="0 15 0 5" Width="100" Content="Start hotspot" Command="{Binding Path=StartHotspotCommand}"></Button>
-            <Button HorizontalAlignment="Center" Margin="0 0" Width="100" Content="Stop hotspot" Command="{Binding Path=EndHotspotCommand}"></Button>
+            <TextBlock Margin="15 15 15 0" Text="{Binding HotSpotStatusMessage}" TextAlignment="Center"></TextBlock>
+            
+            <Button IsEnabled="{Binding StartHotspotBtnEnabled}" HorizontalAlignment="Center" Margin="0 5 0 5" Width="100" Content="Start hotspot" Command="{Binding StartHotspotCommand}"></Button>
+            <Button IsEnabled="{Binding StopHotspotBtnEnabled}" HorizontalAlignment="Center" Margin="0 0" Width="100" Content="Stop hotspot" Command="{Binding StopHotspotCommand}"></Button>
             <TextBlock Text="Link to potential hosted PWA:" Margin="0 15 0 15" HorizontalAlignment="Center" Visibility="{Binding PWAInfo.LinkToPWA, Converter={StaticResource NullToVisibilityConverter}}"></TextBlock>
 
             <Button Name="HyperlinkPWA" Style="{StaticResource HyperlinkStyledButton}" Command="{Binding ClickLink}" Content="{Binding PWAInfo.LinkToPWA}" HorizontalAlignment="Center"></Button>
