@@ -22,7 +22,7 @@
             <Grid HorizontalAlignment="Stretch" Background="{StaticResource PrimaryColorBrush}">
                 <Label Content="EQS PWA Local Instance Tester" FontSize="10" FontWeight="SemiBold"></Label>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Click="Button_MinimizeClick" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Content="🗕" FontWeight="Bold" Width="20" Height="20" Margin="0 0 0 4"></Button>
+                    <Button Click="Button_MinimizeClick" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Content="🗕" FontWeight="Bold" Width="20" Height="20" Margin="0 0 0 5"></Button>
                     <Button Click="Button_WindowStateButtonClick" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Content="▢" FontWeight="Bold" Width="20" Height="20"></Button>
                     <Button Click="Button_CloseClick" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Content="❌" FontWeight="Bold" Width="20" Height="20" ></Button>
 
@@ -80,7 +80,7 @@
                 <Button IsEnabled="{Binding StopHotspotBtnEnabled}" HorizontalAlignment="Center" Margin="0 0" Width="100" Content="Stop hotspot" Command="{Binding StopHotspotCommand}"></Button>
 
 
-                <TextBlock Text="Link to potential hosted PWA:" Margin="0 15 0 15" HorizontalAlignment="Center" Visibility="{Binding PWAInfo.LinkToPWA, Converter={StaticResource NullToVisibilityConverter}}"></TextBlock>
+                <TextBlock Text="Potential link to hosted PWA:" Margin="0 15 0 15" HorizontalAlignment="Center" Visibility="{Binding PWAInfo.LinkToPWA, Converter={StaticResource NullToVisibilityConverter}}"></TextBlock>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button  Name="HyperlinkPWA" Style="{StaticResource HyperlinkStyledButton}" Command="{Binding HyperlinkOpenCommand}" Content="{Binding PWAInfo.LinkToPWA}" HorizontalAlignment="Center"></Button>
