@@ -43,5 +43,35 @@ namespace PWA_AccessLocal_WPF
         {
             Clipboard.SetText(HyperlinkPWA.Content.ToString());
         }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+        private void Button_MinimizeClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void Button_WindowStateButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+            }
+        }
+
+        private void Button_CloseClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
