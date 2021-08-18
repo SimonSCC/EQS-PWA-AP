@@ -8,7 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\checklist.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WPF-Shell-Access-NET5.0\WPF-Shell-Access.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\checklist.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -25,9 +35,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="StartHotspot.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Test.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

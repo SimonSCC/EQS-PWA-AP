@@ -38,6 +38,10 @@ namespace PWA_AccessLocal_WPF
             Regex reg = new Regex("[^0-9]+");
             e.Handled = reg.IsMatch(e.Text);
         }
-   
+
+        private void Clipboard_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(HyperlinkPWA.Content.ToString());
+        }
     }
 }

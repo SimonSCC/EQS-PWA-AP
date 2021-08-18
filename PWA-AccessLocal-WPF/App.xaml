@@ -70,10 +70,14 @@
                     <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
                     <Setter Property="Foreground" Value="{StaticResource TertiaryTextColorBrush}" />
                 </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
             </Style.Triggers>
         </Style>
 
         <Converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
         <Converters:BoolInverser x:Key="BoolInverser"/>
+        <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Application.Resources>
 </Application>

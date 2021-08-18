@@ -84,11 +84,11 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
                     Thread.Sleep(60000);
                     int intVal = int.Parse(MinutesBeforeStoppingHotspot);
                     intVal = intVal -= 1;
-                    MinutesBeforeStoppingHotspot = intVal.ToString();
                     if (intVal <= 0 || !IsOn)
                     {
                         return;
                     }
+                    MinutesBeforeStoppingHotspot = intVal.ToString();
                 }
             }
             catch (Exception e)
