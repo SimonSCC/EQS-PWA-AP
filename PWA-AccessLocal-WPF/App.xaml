@@ -74,5 +74,6 @@
         </Style>
 
         <Converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <Converters:BoolInverser x:Key="BoolInverser"/>
     </Application.Resources>
 </Application>

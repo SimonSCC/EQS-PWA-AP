@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_Shell_Access_NET;
@@ -19,7 +20,10 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
     {
         public ShellCommands ShellCommands { get; set; }
         public HotspotService HotspotService { get; set; }
-        public string MinutesBeforeStoppingHotspot { get; set; } = "60";
+
+        private string _minutesBeforeStoppingHotspot;
+        public string MinutesBeforeStoppingHotspot { get => _minutesBeforeStoppingHotspot; set => SetProperty(ref _minutesBeforeStoppingHotspot, value); }
+        public bool IsOn { get; set; }
         public IDispatcherCaller UIThreadCaller { get; set; }
 
         private string _hotspotStatusMessage;
@@ -50,11 +54,13 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
         //Commands -:: End
 
 
+
+
         public MainViewModel()
         {
             ShellCommands = new ShellCommands();
             HotspotService = new HotspotService(this, ShellCommands);
-
+            MinutesBeforeStoppingHotspot = "60";
             //Commands Begin
             StartHotspotCommand = new StartHotspotCommand(this, HotspotService);
             StopHotspotCommand = new StopHotspotCommand(this, HotspotService);
@@ -64,20 +70,46 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
             //Commands -:: End
             UpdateFields();
         }
+
+        public void CountDown()
+        {
+            try
+            {
+                while (!IsOn)
+                {
+                    Thread.Sleep(10000);
+                }
+                while (IsOn)
+                {
+                    Thread.Sleep(60000);
+                    int intVal = int.Parse(MinutesBeforeStoppingHotspot);
+                    intVal = intVal -= 1;
+                    MinutesBeforeStoppingHotspot = intVal.ToString();
+                    if (intVal <= 0 || !IsOn)
+                    {
+                        return;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }           
+        }
       
 
         public async void UpdateFields()
         {
             PWAInfo = GetPWAInfo();
             CurrentConfig = await HotspotService.GetConfig();
-            bool isOn = await HotspotService.IsHotspotOn();
-            if (isOn)
+            IsOn = await HotspotService.IsHotspotOn();
+            if (IsOn)
             {
                 HotSpotStatusMessage = "A hotspot is running!";
                 StartHotspotBtnEnabled = false;
                 StopHotspotBtnEnabled = true;
             }
-            else if (!isOn)
+            else if (!IsOn)
             {
                 HotSpotStatusMessage = "A hotspot is not running!";
                 StartHotspotBtnEnabled = true;

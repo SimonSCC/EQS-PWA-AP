@@ -23,8 +23,10 @@ namespace WPF_Shell_Access_NET5._0.Commands
         protected override async Task ExecuteAsync(object parameter)
         {
             MainViewModel.HotSpotStatusMessage = "Stopping hotspot...";
+            MainViewModel.StopHotspotBtnEnabled = false;
             await HotSpotServ.EndHotspot();
             MainViewModel.UpdateFields();
+            MainViewModel.MinutesBeforeStoppingHotspot = "60";
         }
     }
 }

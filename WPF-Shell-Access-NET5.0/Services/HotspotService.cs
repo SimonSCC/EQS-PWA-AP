@@ -22,8 +22,8 @@ namespace WPF_Shell_Access_NET5._0.Services
             ShellCommands = shellCommands;
         }
 
-        public void StartTimer(int countdownToEndHotSpot)
-        {
+        public void StartTimer(int countdownToEndHotSpot)   
+        {            
             CountdownToStopHotspot = new System.Timers.Timer(countdownToEndHotSpot * 60000);
             CountdownToStopHotspot.Elapsed += OnTimedEvent;
             CountdownToStopHotspot.Enabled = true;
@@ -46,6 +46,7 @@ namespace WPF_Shell_Access_NET5._0.Services
             int countdownToEndHotSpot = 60;
             int.TryParse(MainViewModel.MinutesBeforeStoppingHotspot, out countdownToEndHotSpot);
             StartTimer(countdownToEndHotSpot);
+
         }
 
         public async Task EndHotspot()
