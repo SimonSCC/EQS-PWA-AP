@@ -8,7 +8,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
-        Title="EQS PWA Local Instance Tester" Height="450" Width="350" Background="{StaticResource PageBackgounrColorBrush}">
+        Title="EQS PWA Local Instance Test Tool" Height="450" Width="350" Background="{StaticResource PageBackgounrColorBrush}">
     <Border BorderBrush="{StaticResource PrimaryColorBrush}" MouseDown="Border_MouseDown" BorderThickness="5">
         <Grid>
             <Grid.RowDefinitions>
