@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WPF_Shell_Access_NET;
 using WPF_Shell_Access_NET5._0.Models;
 using WPF_Shell_Access_NET5._0.ViewModels;
+using System.Timers;
+
 
 namespace WPF_Shell_Access_NET5._0.Services
 {
@@ -13,11 +13,27 @@ namespace WPF_Shell_Access_NET5._0.Services
     {
         private MainViewModel MainViewModel { get; }
         private ShellCommands ShellCommands { get; }
+        public System.Timers.Timer CountdownToStopHotspot { get; set; }
+
 
         public HotspotService(MainViewModel mainViewModel, ShellCommands shellCommands)
         {
             this.MainViewModel = mainViewModel;
             ShellCommands = shellCommands;
+        }
+
+        public void StartTimer(int countdownToEndHotSpot)
+        {
+            CountdownToStopHotspot = new System.Timers.Timer(countdownToEndHotSpot * 60000);
+            CountdownToStopHotspot.Elapsed += OnTimedEvent;
+            CountdownToStopHotspot.Enabled = true;
+        }
+        private async void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            if (await IsHotspotOn())
+            {
+                MainViewModel.UIThreadCaller.InvokeWithUIThread(MainViewModel.StopHotspotCommand);
+            }
         }
 
         public async Task StartHotspot()
@@ -27,6 +43,9 @@ namespace WPF_Shell_Access_NET5._0.Services
                 SetConfig();
             }
             PowerShellScriptResponse resp = await ShellCommands.StartHotspot();
+            int countdownToEndHotSpot = 60;
+            int.TryParse(MainViewModel.MinutesBeforeStoppingHotspot, out countdownToEndHotSpot);
+            StartTimer(countdownToEndHotSpot);
         }
 
         public async Task EndHotspot()

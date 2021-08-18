@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WPF_Shell_Access_NET;
 using WPF_Shell_Access_NET5._0.Commands;
+using WPF_Shell_Access_NET5._0.Interfaces;
 using WPF_Shell_Access_NET5._0.Models;
 using WPF_Shell_Access_NET5._0.Services;
 
@@ -18,8 +19,9 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
     {
         public ShellCommands ShellCommands { get; set; }
         public HotspotService HotspotService { get; set; }
-        
-        
+        public string MinutesBeforeStoppingHotspot { get; set; } = "60";
+        public IDispatcherCaller UIThreadCaller { get; set; }
+
         private string _hotspotStatusMessage;
         public string HotSpotStatusMessage { get => _hotspotStatusMessage; set => SetProperty(ref _hotspotStatusMessage, value); }
 
@@ -62,8 +64,7 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
             //Commands -:: End
             UpdateFields();
         }
-
-
+      
 
         public async void UpdateFields()
         {
