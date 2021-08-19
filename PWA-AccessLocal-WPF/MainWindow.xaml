@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
         Title="EQS PWA Local Instance Test Tool" Height="450" Width="350" Background="{StaticResource PageBackgounrColorBrush}">
     <Border BorderBrush="{StaticResource PrimaryColorBrush}" MouseDown="Border_MouseDown" BorderThickness="5">
         <Grid>
@@ -79,18 +79,27 @@
                 <Button IsEnabled="{Binding StartHotspotBtnEnabled}" HorizontalAlignment="Center" Margin="0 5 0 5" Width="100" Content="Start hotspot" Command="{Binding StartHotspotCommand}"></Button>
                 <Button IsEnabled="{Binding StopHotspotBtnEnabled}" HorizontalAlignment="Center" Margin="0 0" Width="100" Content="Stop hotspot" Command="{Binding StopHotspotCommand}"></Button>
 
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Visibility="{Binding StopHotspotBtnEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Margin="0 5" TextAlignment="Center" TextWrapping="Wrap" Width="200" Text="'ng serve --host 0.0.0.0' to be able to access via ip"></TextBlock>
+                    <TextBlock Text="Potential links to hosted PWA:" Margin="0 15 0 15" HorizontalAlignment="Center"></TextBlock>
 
-                <TextBlock Text="Potential link to hosted PWA:" Margin="0 15 0 15" HorizontalAlignment="Center" Visibility="{Binding PWAInfo.LinkToPWA, Converter={StaticResource NullToVisibilityConverter}}"></TextBlock>
+                    <ItemsControl x:Name="LinksToPWA" ItemsSource="{Binding PWAInfo.PotentialLinksToPWA}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0 2 0 0"  HorizontalAlignment="Center">
+                                    <Button Name="HyperlinkPWA" Width="140" Style="{StaticResource HyperlinkStyledButton}" Command="{Binding ElementName=LinksToPWA, Path=DataContext.HyperlinkOpenCommand}" CommandParameter="{Binding}" Content="{Binding}" HorizontalAlignment="Center" ></Button>
+                                    <Button Height="15" Width="15" Margin="10 0 0 0" Click="Clipboard_Click" DataContext="{Binding}">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Source="Images/checklist.png"></Image>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button  Name="HyperlinkPWA" Style="{StaticResource HyperlinkStyledButton}" Command="{Binding HyperlinkOpenCommand}" Content="{Binding PWAInfo.LinkToPWA}" HorizontalAlignment="Center"></Button>
-                    <Button Visibility="{Binding PWAInfo.LinkToPWA, Converter={StaticResource NullToVisibilityConverter}}" Height="15" Width="15" Margin="10 0 0 0" Click="Clipboard_Click">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Image Source="Images/checklist.png"></Image>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
                 </StackPanel>
             </StackPanel>
         </Grid>

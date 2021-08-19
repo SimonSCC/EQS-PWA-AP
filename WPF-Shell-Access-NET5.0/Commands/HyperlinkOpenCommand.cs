@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Shell_Access_NET5._0.Services;
+using WPF_Shell_Access_NET5._0.ViewModels;
 
 namespace WPF_Shell_Access_NET5._0.Commands
 {
@@ -11,7 +12,7 @@ namespace WPF_Shell_Access_NET5._0.Commands
     {
         public HotspotService HotSpotService { get; }
 
-        public HyperlinkOpenCommand(HotspotService hotSpotService)
+        public HyperlinkOpenCommand(MainViewModel vm, HotspotService hotSpotService)
         {
             HotSpotService = hotSpotService;
         }
@@ -19,7 +20,7 @@ namespace WPF_Shell_Access_NET5._0.Commands
 
         protected override async Task ExecuteAsync(object parameter)
         {
-            HotSpotService.OpenLink();
+            HotSpotService.OpenLink(parameter.ToString());
         }
     }
 }

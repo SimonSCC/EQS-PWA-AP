@@ -8,22 +8,26 @@ namespace WPF_Shell_Access_NET5._0.Models
 {
     public class PWAInformation
     {
-        public string IP { get; set; }
+        public List<string> WifiNetworkIps { get; set; }
         public string Port { get; set; }
-        public string LinkToPWA { get; set; }
+        public List<string> PotentialLinksToPWA { get; set; }
 
-        public PWAInformation(string ip, string port)
+        public PWAInformation(List<string> ips, string port)
         {
-            IP = ip;
+            WifiNetworkIps = ips;
             Port = port;
 
-            if (IP == null || IP == "")
+            if (WifiNetworkIps == null || WifiNetworkIps.Count == 0)
             {
-                LinkToPWA = null;
+                PotentialLinksToPWA = null;
             }
             else
             {
-                LinkToPWA = $"https://{ip}:{port}";
+                PotentialLinksToPWA = new List<string>();
+                foreach (string ip in WifiNetworkIps)
+                {
+                    PotentialLinksToPWA.Add($"http://{ip}:{port}");
+                }
             }
         }
     }

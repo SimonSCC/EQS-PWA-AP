@@ -96,9 +96,9 @@ namespace WPF_Shell_Access_NET5._0.Services
             }
         }
 
-        public void OpenLink()
+        public void OpenLink(string v)
         {
-            ShellCommands.StartBrowser(MainViewModel.PWAInfo.LinkToPWA);
+            ShellCommands.StartBrowser(v);
         }
 
     }

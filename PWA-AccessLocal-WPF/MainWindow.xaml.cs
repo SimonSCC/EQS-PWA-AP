@@ -23,6 +23,7 @@ namespace PWA_AccessLocal_WPF
             MainViewModel vm = new MainViewModel();
             vm.UIThreadCaller = this;
             DataContext = vm;
+
         }
 
         public void InvokeWithUIThread(ICommand command)
@@ -41,7 +42,8 @@ namespace PWA_AccessLocal_WPF
 
         private void Clipboard_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(HyperlinkPWA.Content.ToString());
+           
+            Clipboard.SetText(((Button)sender).DataContext.ToString());
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -72,6 +74,6 @@ namespace PWA_AccessLocal_WPF
         private void Button_CloseClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
+        }     
     }
 }

@@ -58,17 +58,20 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
 
         public MainViewModel()
         {
+            new FirewallService().AllowRule();
             ShellCommands = new ShellCommands();
             HotspotService = new HotspotService(this, ShellCommands);
             MinutesBeforeStoppingHotspot = "60";
             //Commands Begin
             StartHotspotCommand = new StartHotspotCommand(this, HotspotService);
             StopHotspotCommand = new StopHotspotCommand(this, HotspotService);
-            HyperlinkOpenCommand = new HyperlinkOpenCommand(HotspotService);
+            HyperlinkOpenCommand = new HyperlinkOpenCommand(this, HotspotService);
 
 
             //Commands -:: End
             UpdateFields();
+
+
         }
 
         public void CountDown()
@@ -119,8 +122,8 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
 
         private PWAInformation GetPWAInfo()
         {
-            string ipaddress = "";
-            string port = "42100";
+            List<string> potentialIpAddresses = new List<string>();
+            string port = "4200";
             foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (item.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 && item.OperationalStatus == OperationalStatus.Up)
@@ -129,12 +132,12 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
                     {
                         if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                         {
-                            ipaddress = ip.Address.ToString();
+                            potentialIpAddresses.Add(ip.Address.ToString());
                         }
                     }
                 }
             }
-            return new PWAInformation(ipaddress, port);
+            return new PWAInformation(potentialIpAddresses, port);
         }
     }
 }
