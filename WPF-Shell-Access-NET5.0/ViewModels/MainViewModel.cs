@@ -103,9 +103,18 @@ namespace WPF_Shell_Access_NET5._0.ViewModels
 
         public async void UpdateFields()
         {
-            PWAInfo = GetPWAInfo();
-            CurrentConfig = await HotspotService.GetConfig();
-            IsOn = await HotspotService.IsHotspotOn();
+            try
+            {
+                PWAInfo = GetPWAInfo();
+                CurrentConfig = await HotspotService.GetConfig();
+                IsOn = await HotspotService.IsHotspotOn();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
+           
             if (IsOn)
             {
                 HotSpotStatusMessage = "A hotspot is running!";

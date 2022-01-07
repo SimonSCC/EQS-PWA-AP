@@ -30,10 +30,19 @@ namespace WPF_Shell_Access_NET5._0.Services
         }
         private async void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            if (await IsHotspotOn())
+            try
+            {
+                if (await IsHotspotOn())
+                {
+                    MainViewModel.UIThreadCaller.InvokeWithUIThread(MainViewModel.StopHotspotCommand);
+                }
+            }
+            catch (Exception err)
             {
                 MainViewModel.UIThreadCaller.InvokeWithUIThread(MainViewModel.StopHotspotCommand);
+                Console.WriteLine(err.Message);
             }
+           
         }
 
         public async Task StartHotspot()
@@ -55,6 +64,8 @@ namespace WPF_Shell_Access_NET5._0.Services
             {
                 SetConfig();
             }
+            CountdownToStopHotspot.Stop();
+            CountdownToStopHotspot.Dispose();
             PowerShellScriptResponse resp = await ShellCommands.StopHotspot();
         }
 

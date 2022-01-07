@@ -40,7 +40,7 @@ namespace WPF_Shell_Access_NET5._0.Services
                 //newRule.Name = "Node.js: Server-side JavaScript";
 
                 //fwPolicy2.Rules.Add(newRule);
-                Console.WriteLine("Add Rule");
+                //Console.WriteLine("Add Rule");
                 //If using vs code most likely there's already a rule
             }
             else

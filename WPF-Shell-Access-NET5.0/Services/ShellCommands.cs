@@ -20,9 +20,13 @@ namespace WPF_Shell_Access_NET
 
         async Task<PowerShellScriptResponse> ExecutePowerShellScriptAsync(string path)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
+            ProcessStartInfo startInfo = new ProcessStartInfo();    
             startInfo.FileName = @"powershell.exe";
-            startInfo.Arguments = path;
+
+            //startInfo.FileName = Path.GetFileNameWithoutExtension(path) + ".exe";
+            //startInfo.WorkingDirectory = Path.GetDirectoryName(path);
+            //startInfo.Arguments = Path.GetFileName(path);
+            startInfo.Arguments = "\""+ path + "\"";
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
             startInfo.UseShellExecute = false;
